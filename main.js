@@ -176,7 +176,7 @@ function reset_game() {
     }
     function add_all_my_pipes() {
       add_pipe(500,  100, 240, pipe_piece_image_store[0]);
-    add_pipe(800,   50, 140, pipe_piece_image_store[1]);
+    add_pipe(800,   50, 140, pipe_piece_image_store[0]);
     // add_pipe(800, 0, 300);
     // add_pipe(1000, 0, 300);
     // add_pipe(1100, 0, 300);
