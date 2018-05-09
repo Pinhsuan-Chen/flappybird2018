@@ -1,0 +1,27 @@
+#div1 {
+	font-size:48px; }
+
+	body { 
+		
+		font-family: 'Pacifico'; 
+	}
+	h1{
+		text-shadow:5px 5px 5px  #dfd2ec ; 
+		text-align:center;
+	}
+	
+	canvas{ 
+		animation: mymove 5s infinite;  
+		/*border: 5px solid   #0a3cda  ;*/
+		 /*border-style:dotted; border-radius: 15px 50px; 
+	}*/
+	
+	@keyframes mymove {
+		50% {
+			/*box-shadow: 10px 20px 30px blue;*/
+		} 
+	}
+
+	h3{ 
+		font-family:'Permanent Marker'; 
+	}
