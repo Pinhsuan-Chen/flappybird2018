@@ -37,7 +37,7 @@ if (myCanvas.getContext) {
 
  // var ctx = myCanvas.getContext("2d");
  var FPS = 40;
- var jump_amount = -12;
+ var jump_amount = -10;
  var max_fall_speed= +10;
  var acceleration = 1;
  var pipe_speed = -3;
@@ -110,20 +110,52 @@ function make_bird_slow_and_fall() {
    game_mode = 'over';
  }
 }
-function add_pipe(x_pos, y_pos, pipe_speed_custom) {
+var pipe_piece_image_store = [
+'img/asteroid1.png',
+// 'img/asteroid2.png',
+// 'img/asteroid3.png',
+// 'img/asteroid4.png',
+// 'img/asteroid5.png',
+];
+function generate_random_pipe_img(){
+  var randomNum = Math.floor(Math.random()* pipe_piece_image_store.length);
+  return pipe_piece_image_store[randomNum];
+}
+
+function add_pipe(x_pos,pipe_speed_custom) {
   var pipe_one_block = new MySprite(generate_random_pipe_img());
   pipe_one_block.x = x_pos;
-  pipe_one_block.y = y_pos;
+  pipe_one_block.y = Math.floor(Math.random()*5)*100;
   pipe_one_block.velocity_x = pipe_speed_custom;
   pipes.push(pipe_one_block);
-
-  // var bottom_pipe = new MySprite(pipe_img_url);
-  // bottom_pipe.flipV = true;
-  // bottom_pipe.x = x_pos;
-  // bottom_pipe.y = top_of_gap + gap_width;
-  // bottom_pipe.velocity_x = pipe_speed;
-  // pipes.push(bottom_pipe);
 }
+function add_all_my_pipes() {
+      console.log(pipes);
+      for(var i = 3;i<50; i++){
+        add_pipe(i*100,-4);
+      }
+      // var pipes_map_one= [
+      // [500,  100, -4],
+      // [500,  200, -4.5],
+      // [600,  300, -4],
+      // [900,  200, -4],
+      // [1100, 400, -3],
+      // [1400,  100, -4],
+      // [1600,  300, -4],
+      // [1800,  500, -3],
+      // [1900,  200, -4],
+      // [2100, 400, -3],
+      // ];
+      // pipes_map_one.forEach(el => add_pipe(...el));
+      
+    // var finish_line = new MySprite("http://s2js.com/img/etc/flappyend.png");
+    // finish_line.x = 3900;
+    // finish_line.velocity_x = pipe_speed;
+    // pipes.push(finish_line);
+  }
+
+
+add_all_my_pipes();
 function make_bird_tilt_appropriately() {
   if (bird.velocity_y < 0)  {
    bird.angle= -5;
@@ -182,58 +214,8 @@ function reset_game() {
       pipes=[];                           // erase all the pipes from the array
       add_all_my_pipes();                 // and load them back in their starting positions
     }
-    function add_all_my_pipes() {
-      var pipes_map_one= [
-      [500,  100, -4],
-      [500,  200, -4.5],
-      [600,  300, -4],
-      [800,  500, -3],
-      [900,  200, -4],
-      [1100, 400, -3],
-      [1400,  100, -4],
-      [1600,  300, -4],
-      [1800,  500, -3],
-      [1900,  200, -4],
-      [2100, 400, -3],
-      ];
-      console.log(pipes_map_one[0]);
-      pipes_map_one.forEach(el => add_pipe(...el));
-      // add_pipe(500,  100, -4, pipe_piece_image_store[1]);
-      // add_pipe(500,  200, -4.5, pipe_piece_image_store[1]);
-    // add_pipe(800,   50, 140, pipe_piece_image_store[1]);
-    // add_pipe(800, 0, 300);
-    // add_pipe(1000, 0, 300);
-    // add_pipe(1100, 0, 300);
-    // add_pipe(1200, 150, 120);
-    // add_pipe(1600, 100, 120);
-    // add_pipe(1800, 150, 120);
-    // add_pipe(2000, 200, 120);
-    // add_pipe(2200, 250, 120);
-    // add_pipe(2400,  30, 100);
-    // add_pipe(2700, 300, 100);
-    // add_pipe(3000, 100,  80);
-    // add_pipe(3300, 250,  80);
-    // add_pipe(3600,  50,  60);
-    var finish_line = new MySprite("http://s2js.com/img/etc/flappyend.png");
-    finish_line.x = 3900;
-    finish_line.velocity_x = pipe_speed;
-    pipes.push(finish_line);
-  }
 
-  var pipe_piece_image_store = [
-  'img/asteroid1.png',
-  'img/asteroid2.png',
-  'img/asteroid3.png',
-  'img/asteroid4.png',
-  'img/asteroid5.png',
-  ];
-  function generate_random_pipe_img(){
-    var randomNum = Math.floor(Math.random()* pipe_piece_image_store.length);
-    console.log(randomNum);
-    return pipe_piece_image_store[randomNum];
-  }
-  
-  add_all_my_pipes();
+
 
 
   function Do_a_Frame () {
