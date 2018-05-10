@@ -114,7 +114,7 @@ var pipe_piece_image_store = [
 'img/asteroid1.png',
 // 'img/asteroid2.png',
 // 'img/asteroid3.png',
-// 'img/asteroid4.png',
+'img/asteroid4.png',
 // 'img/asteroid5.png',
 ];
 function generate_random_pipe_img(){
@@ -122,17 +122,22 @@ function generate_random_pipe_img(){
   return pipe_piece_image_store[randomNum];
 }
 
-function add_pipe(x_pos,pipe_speed_custom) {
+function add_pipe(x_pos) {
   var pipe_one_block = new MySprite(generate_random_pipe_img());
   pipe_one_block.x = x_pos;
-  pipe_one_block.y = Math.floor(Math.random()*5)*100;
-  pipe_one_block.velocity_x = pipe_speed_custom;
+  if(score>200){
+    pipe_one_block.y = Math.floor(Math.random()*7)*100;
+  }
+  pipe_one_block.y = Math.floor(Math.random()*6)*100;
+  // Math.floor(Math.random()*(max-min+1)+min);
+  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*4+3));
+
   pipes.push(pipe_one_block);
 }
 function add_all_my_pipes() {
       console.log(pipes);
-      for(var i = 3;i<50; i++){
-        add_pipe(i*100,-4);
+      for(var i = 5;i<200; i++){
+        add_pipe(i*100);
       }
       // var pipes_map_one= [
       // [500,  100, -4],
@@ -160,7 +165,7 @@ function make_bird_tilt_appropriately() {
   if (bird.velocity_y < 0)  {
    bird.angle= -5;
  }
- else if (bird.angle < 70) {
+ else if (bird.angle < 60) {
    bird.angle = bird.angle + 4;
  }
 }
