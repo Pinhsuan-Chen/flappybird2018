@@ -110,12 +110,12 @@ function make_bird_slow_and_fall() {
    game_mode = 'over';
  }
 }
-function add_pipe(x_pos, y_pos, gap_width, pipe_img_url) {
-  var top_pipe = new MySprite(pipe_img_url);
-  top_pipe.x = x_pos;
-  top_pipe.y = y_pos;
-  top_pipe.velocity_x = pipe_speed;
-  pipes.push(top_pipe);
+function add_pipe(x_pos, y_pos, pipe_speed_custom, pipe_img_url) {
+  var pipe_one_block = new MySprite(pipe_img_url);
+  pipe_one_block.x = x_pos;
+  pipe_one_block.y = y_pos;
+  pipe_one_block.velocity_x = pipe_speed_custom;
+  pipes.push(pipe_one_block);
 
   // var bottom_pipe = new MySprite(pipe_img_url);
   // bottom_pipe.flipV = true;
@@ -154,7 +154,6 @@ var start_time = Date.now();
 
 function calculate_score_by_time(){
   score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
-  console.log( time_game_last_running_seconds);
   return score;
   
 }
@@ -165,16 +164,13 @@ function display_intro_instructions () {
  ctx.fillText("Press, touch or click to start", myCanvas.width / 2, myCanvas.height / 4);
 }
 function display_game_over () {
- var score = 0;
- for (var i=0; i < pipes.length; i++)
-  if (pipes[i].x < bird.x) {score = score + 0.5;}
-ctx.font= "30px Arial";
-ctx.fillStyle= "red";
-ctx.textAlign="center";
-ctx.fillText("Game Over", myCanvas.width / 2, 100);
-ctx.fillText("Score: " + score, myCanvas.width / 2, 150);
-ctx.font= "20px Arial";
-ctx.fillText("Click, touch, or press to play again", myCanvas.width / 2, 300);
+  ctx.font= "30px Arial";
+  ctx.fillStyle= "red";
+  ctx.textAlign="center";
+  ctx.fillText("Game Over", myCanvas.width / 2, 100);
+  ctx.fillText("Score: " + score, myCanvas.width / 2, 150);
+  ctx.font= "20px Arial";
+  ctx.fillText("Click, touch, or press to play again", myCanvas.width / 2, 300);
 }
 function display_bar_running_along_bottom() {
  if (bottom_bar_offset < -23) bottom_bar_offset = 0;
@@ -187,8 +183,14 @@ function reset_game() {
       add_all_my_pipes();                 // and load them back in their starting positions
     }
     function add_all_my_pipes() {
-      add_pipe(500,  100, 240, pipe_piece_image_store[1]);
-      add_pipe(500,  200, 240, pipe_piece_image_store[1]);
+      var pipes_map_one= [
+      [600,  300, -4, pipe_piece_image_store[0]],
+      [800,  500, -4, pipe_piece_image_store[0]]
+      ];
+      console.log(pipes_map_one[0]);
+      pipes_map_one.forEach(el => add_pipe(...el));
+      add_pipe(500,  100, -4, pipe_piece_image_store[1]);
+      add_pipe(500,  200, -4.5, pipe_piece_image_store[1]);
     // add_pipe(800,   50, 140, pipe_piece_image_store[1]);
     // add_pipe(800, 0, 300);
     // add_pipe(1000, 0, 300);
@@ -218,11 +220,6 @@ function reset_game() {
   //   return pipe_piece_image_store[randomNum];
   // }
 
-  // var pipe_piece = new Image();
-  // pipe_piece.onload = add_all_my_pipes;
-  // pipe_piece.src = generate_random_pipe_img() ;
-  // console.log(pipe_piece);
-  // pipe_piece.src = "img/astroid.png";
 
   var pipe_piece_image_store = [
   'img/astronaut.png',
@@ -242,12 +239,10 @@ function reset_game() {
       }
       case 'running': {
        time_game_last_running = new Date();
-       console.log('time_game_last_running'+time_game_last_running);
-       console.log('start: '+time_game_last_running_seconds);
        bottom_bar_offset = bottom_bar_offset + pipe_speed;
        display_score();
        calculate_score_by_time();
-      show_the_pipes();
+       show_the_pipes();
        make_bird_tilt_appropriately();
        make_bird_slow_and_fall();
        check_for_end_game();
