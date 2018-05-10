@@ -149,9 +149,7 @@ function make_bird_tilt_appropriately() {
 var start_time = Date.now();
 var score = 0;
 function calculate_score_by_time(){
-  score = Math.floor((Date.now()-start_time)/100)
-  console.log(Math.floor((Date.now()-start_time)/100));
-  console.log('Score = '+score);
+  score = Math.floor((Date.now()-start_time)/100);
   return score;
   
 }
