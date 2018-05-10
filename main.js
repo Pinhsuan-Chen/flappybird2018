@@ -110,8 +110,8 @@ function make_bird_slow_and_fall() {
    game_mode = 'over';
  }
 }
-function add_pipe(x_pos, y_pos, pipe_speed_custom, pipe_img_url) {
-  var pipe_one_block = new MySprite(pipe_img_url);
+function add_pipe(x_pos, y_pos, pipe_speed_custom) {
+  var pipe_one_block = new MySprite(generate_random_pipe_img());
   pipe_one_block.x = x_pos;
   pipe_one_block.y = y_pos;
   pipe_one_block.velocity_x = pipe_speed_custom;
@@ -125,30 +125,30 @@ function add_pipe(x_pos, y_pos, pipe_speed_custom, pipe_img_url) {
   // pipes.push(bottom_pipe);
 }
 function make_bird_tilt_appropriately() {
-    // if (bird.velocity_y < 0)  {
-    //              bird.angle= -15;
-    //              }
-    //    else if (bird.angle < 70) {
-    //              bird.angle = bird.angle + 4;
-    //              }
-  }
-  function show_the_pipes() {
-    for (var i=0; i < pipes.length; i++) {
-     pipes[i].Do_Frame_Things();
-   }
+  if (bird.velocity_y < 0)  {
+   bird.angle= -5;
  }
- function check_for_end_game() {
-   for (var i=0; i < pipes.length; i++)
-     if (ImagesTouching(bird, pipes[i])) game_mode = "over";
+ else if (bird.angle < 70) {
+   bird.angle = bird.angle + 4;
  }
- function display_score(){
+}
+function show_the_pipes() {
+  for (var i=0; i < pipes.length; i++) {
+   pipes[i].Do_Frame_Things();
+ }
+}
+function check_for_end_game() {
+ for (var i=0; i < pipes.length; i++)
+   if (ImagesTouching(bird, pipes[i])) game_mode = "over";
+}
+function display_score(){
   //  var score = 0;
   //  for (var i=0; i < pipes.length; i++)
   //   if (pipes[i].x < bird.x) {score = score + 0.5;}
-  ctx.font= "20px Arial";
+  ctx.font= "20px Courier New";
   ctx.fillStyle= "white";
   ctx.textAlign="center";
-  ctx.fillText("Score: " + score, 50, 30);
+  ctx.fillText("Score: " + score, 80, 30);
 }
 var start_time = Date.now();
 
@@ -158,18 +158,18 @@ function calculate_score_by_time(){
   
 }
 function display_intro_instructions () {
- ctx.font= "25px Arial";
- ctx.fillStyle= "red";
+ ctx.font= "25px Courier New";
+ ctx.fillStyle= "white";
  ctx.textAlign="center";
  ctx.fillText("Press, touch or click to start", myCanvas.width / 2, myCanvas.height / 4);
 }
 function display_game_over () {
-  ctx.font= "30px Arial";
-  ctx.fillStyle= "red";
+  ctx.font= "30px Courier New";
+  ctx.fillStyle= "white";
   ctx.textAlign="center";
   ctx.fillText("Game Over", myCanvas.width / 2, 100);
   ctx.fillText("Score: " + score, myCanvas.width / 2, 150);
-  ctx.font= "20px Arial";
+  ctx.font= "20px Courier New";
   ctx.fillText("Click, touch, or press to play again", myCanvas.width / 2, 300);
 }
 function display_bar_running_along_bottom() {
@@ -184,13 +184,22 @@ function reset_game() {
     }
     function add_all_my_pipes() {
       var pipes_map_one= [
-      [600,  300, -4, pipe_piece_image_store[0]],
-      [800,  500, -4, pipe_piece_image_store[0]]
+      [500,  100, -4],
+      [500,  200, -4.5],
+      [600,  300, -4],
+      [800,  500, -3],
+      [900,  200, -4],
+      [1100, 400, -3],
+      [1400,  100, -4],
+      [1600,  300, -4],
+      [1800,  500, -3],
+      [1900,  200, -4],
+      [2100, 400, -3],
       ];
       console.log(pipes_map_one[0]);
       pipes_map_one.forEach(el => add_pipe(...el));
-      add_pipe(500,  100, -4, pipe_piece_image_store[1]);
-      add_pipe(500,  200, -4.5, pipe_piece_image_store[1]);
+      // add_pipe(500,  100, -4, pipe_piece_image_store[1]);
+      // add_pipe(500,  200, -4.5, pipe_piece_image_store[1]);
     // add_pipe(800,   50, 140, pipe_piece_image_store[1]);
     // add_pipe(800, 0, 300);
     // add_pipe(1000, 0, 300);
@@ -211,21 +220,21 @@ function reset_game() {
     pipes.push(finish_line);
   }
 
-  // function generate_random_pipe_img(){
-
-
-
-  //   var randomNum = Math.floor(Math.random()* pipe_piece_image_store.length);
-  //   console.log(randomNum);
-  //   return pipe_piece_image_store[randomNum];
-  // }
-
-
   var pipe_piece_image_store = [
   'img/asteroid1.png',
-  'img/asteroid2.png'
+  'img/asteroid2.png',
+  'img/asteroid3.png',
+  'img/asteroid4.png',
+  'img/asteroid5.png',
   ];
+  function generate_random_pipe_img(){
+    var randomNum = Math.floor(Math.random()* pipe_piece_image_store.length);
+    console.log(randomNum);
+    return pipe_piece_image_store[randomNum];
+  }
+  
   add_all_my_pipes();
+
 
   function Do_a_Frame () {
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
