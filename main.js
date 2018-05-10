@@ -105,7 +105,7 @@ function make_bird_slow_and_fall() {
   if (bird.velocity_y < max_fall_speed) {
    bird.velocity_y = bird.velocity_y + acceleration;
  }
- if (bird.y > myCanvas.height - bird.MyImg.height)  {
+ if (bird.x < 0 || bird.y+bird.MyImg.height < 0 || bird.y > myCanvas.height - bird.MyImg.height)  {
    bird.velocity_y = 0;
    game_mode = 'over';
  }
