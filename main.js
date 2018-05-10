@@ -106,19 +106,19 @@ function make_bird_slow_and_fall() {
    game_mode = 'over';
  }
 }
-function add_pipe(x_pos, top_of_gap, gap_width, pipe_img_url) {
+function add_pipe(x_pos, y_pos, gap_width, pipe_img_url) {
   var top_pipe = new MySprite(pipe_img_url);
   top_pipe.x = x_pos;
-  top_pipe.y = top_of_gap - top_pipe.MyImg.height;
+  top_pipe.y = y_pos;
   top_pipe.velocity_x = pipe_speed;
   pipes.push(top_pipe);
 
-  var bottom_pipe = new MySprite(pipe_img_url);
-  bottom_pipe.flipV = true;
-  bottom_pipe.x = x_pos;
-  bottom_pipe.y = top_of_gap + gap_width;
-  bottom_pipe.velocity_x = pipe_speed;
-  pipes.push(bottom_pipe);
+  // var bottom_pipe = new MySprite(pipe_img_url);
+  // bottom_pipe.flipV = true;
+  // bottom_pipe.x = x_pos;
+  // bottom_pipe.y = top_of_gap + gap_width;
+  // bottom_pipe.velocity_x = pipe_speed;
+  // pipes.push(bottom_pipe);
 }
 function make_bird_tilt_appropriately() {
     // if (bird.velocity_y < 0)  {
@@ -175,8 +175,9 @@ function reset_game() {
       add_all_my_pipes();                 // and load them back in their starting positions
     }
 function add_all_my_pipes() {
-    add_pipe(500,  100, 240, pipe_piece_image_store[0]);
-    add_pipe(800,   50, 140, pipe_piece_image_store[1]);
+    add_pipe(500,  100, 240, pipe_piece_image_store[1]);
+    add_pipe(500,  200, 240, pipe_piece_image_store[1]);
+    // add_pipe(800,   50, 140, pipe_piece_image_store[1]);
     // add_pipe(800, 0, 300);
     // add_pipe(1000, 0, 300);
     // add_pipe(1100, 0, 300);
@@ -213,7 +214,7 @@ function add_all_my_pipes() {
 
   var pipe_piece_image_store = [
     'img/astronaut.png',
-  'img/astroid.png',
+  'img/astroid1.png',
   'img/purple.png'
   ];
   add_all_my_pipes();
@@ -252,4 +253,5 @@ bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
 
 setInterval(Do_a_Frame, 1000/FPS);
+console.log(pipes);
  
