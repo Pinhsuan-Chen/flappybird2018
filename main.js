@@ -222,9 +222,8 @@ function reset_game() {
 
 
   var pipe_piece_image_store = [
-  'img/astronaut.png',
-  'img/astroid1.png',
-  'img/purple.png'
+  'img/asteroid1.png',
+  'img/asteroid2.png'
   ];
   add_all_my_pipes();
 
