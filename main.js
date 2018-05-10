@@ -43,8 +43,10 @@ if (myCanvas.getContext) {
  var pipe_speed = -3;
  var game_mode = 'prestart';
  var time_game_last_running;
+ var time_game_last_running_seconds;
  var bottom_bar_offset = 0;
  var pipes = [];
+ var score = 0;
 
 
  function MySprite (img_url) {
@@ -80,6 +82,7 @@ function Got_Player_Input(MyEvent) {
  switch (game_mode) {
   case 'prestart':
   game_mode = 'running';
+  time_game_last_running_seconds = Date.now();
   break;
 
   case 'running':
@@ -89,6 +92,7 @@ function Got_Player_Input(MyEvent) {
   case 'over': if (new Date() - time_game_last_running > 1000) {
     reset_game();
     game_mode = 'running';
+    time_game_last_running_seconds = Date.now();
     break;
   }
 }
@@ -147,9 +151,10 @@ function make_bird_tilt_appropriately() {
   ctx.fillText("Score: " + score, 50, 30);
 }
 var start_time = Date.now();
-var score = 0;
+
 function calculate_score_by_time(){
-  score = Math.floor((Date.now()-start_time)/100);
+  score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
+  console.log( time_game_last_running_seconds);
   return score;
   
 }
@@ -237,6 +242,8 @@ function reset_game() {
       }
       case 'running': {
        time_game_last_running = new Date();
+       console.log('time_game_last_running'+time_game_last_running);
+       console.log('start: '+time_game_last_running_seconds);
        bottom_bar_offset = bottom_bar_offset + pipe_speed;
        display_score();
        calculate_score_by_time();
@@ -261,4 +268,3 @@ bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
 // setInterval(display_score_by_time, 100);
 setInterval(Do_a_Frame, 1000/FPS);
-console.log(pipes);
