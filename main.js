@@ -138,13 +138,22 @@ function make_bird_tilt_appropriately() {
      if (ImagesTouching(bird, pipes[i])) game_mode = "over";
  }
  function display_score(){
-   var score = 0;
-   for (var i=0; i < pipes.length; i++)
-    if (pipes[i].x < bird.x) {score = score + 0.5;}
+  //  var score = 0;
+  //  for (var i=0; i < pipes.length; i++)
+  //   if (pipes[i].x < bird.x) {score = score + 0.5;}
   ctx.font= "20px Arial";
   ctx.fillStyle= "white";
   ctx.textAlign="center";
   ctx.fillText("Score: " + score, 50, 30);
+}
+var start_time = Date.now();
+var score = 0;
+function calculate_score_by_time(){
+  score = Math.floor((Date.now()-start_time)/100)
+  console.log(Math.floor((Date.now()-start_time)/100));
+  console.log('Score = '+score);
+  return score;
+  
 }
 function display_intro_instructions () {
  ctx.font= "25px Arial";
@@ -174,9 +183,9 @@ function reset_game() {
       pipes=[];                           // erase all the pipes from the array
       add_all_my_pipes();                 // and load them back in their starting positions
     }
-function add_all_my_pipes() {
-    add_pipe(500,  100, 240, pipe_piece_image_store[1]);
-    add_pipe(500,  200, 240, pipe_piece_image_store[1]);
+    function add_all_my_pipes() {
+      add_pipe(500,  100, 240, pipe_piece_image_store[1]);
+      add_pipe(500,  200, 240, pipe_piece_image_store[1]);
     // add_pipe(800,   50, 140, pipe_piece_image_store[1]);
     // add_pipe(800, 0, 300);
     // add_pipe(1000, 0, 300);
@@ -213,7 +222,7 @@ function add_all_my_pipes() {
   // pipe_piece.src = "img/astroid.png";
 
   var pipe_piece_image_store = [
-    'img/astronaut.png',
+  'img/astronaut.png',
   'img/astroid1.png',
   'img/purple.png'
   ];
@@ -232,7 +241,8 @@ function add_all_my_pipes() {
        time_game_last_running = new Date();
        bottom_bar_offset = bottom_bar_offset + pipe_speed;
        display_score();
-       show_the_pipes();
+       calculate_score_by_time();
+      show_the_pipes();
        make_bird_tilt_appropriately();
        make_bird_slow_and_fall();
        check_for_end_game();
@@ -251,7 +261,6 @@ bottom_bar.src = "img/bottom.png" ;
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
-
+// setInterval(display_score_by_time, 100);
 setInterval(Do_a_Frame, 1000/FPS);
 console.log(pipes);
- 
