@@ -83,6 +83,7 @@ function Got_Player_Input(MyEvent) {
   case 'prestart':
   game_mode = 'running';
   time_game_last_running_seconds = Date.now();
+
   break;
 
   case 'running':
@@ -130,7 +131,7 @@ function add_pipe(x_pos) {
   }
   pipe_one_block.y = Math.floor(Math.random()*6)*100;
   // Math.floor(Math.random()*(max-min+1)+min);
-  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*4+3));
+  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+3));
 
   pipes.push(pipe_one_block);
 }
@@ -179,18 +180,17 @@ function check_for_end_game() {
    if (ImagesTouching(bird, pipes[i])) game_mode = "over";
 }
 function display_score(){
-  //  var score = 0;
-  //  for (var i=0; i < pipes.length; i++)
-  //   if (pipes[i].x < bird.x) {score = score + 0.5;}
   ctx.font= "20px Courier New";
   ctx.fillStyle= "white";
   ctx.textAlign="center";
   ctx.fillText("Score: " + score, 80, 30);
 }
-var start_time = Date.now();
 
-function calculate_score_by_time(){
-  score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
+function calculate_score(){
+
+   for (var i=0; i < pipes.length; i++)
+    if (pipes[i].x < bird.x) {score = i;}
+  // score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
   return score;
   
 }
@@ -236,7 +236,7 @@ function reset_game() {
        time_game_last_running = new Date();
        bottom_bar_offset = bottom_bar_offset + pipe_speed;
        display_score();
-       calculate_score_by_time();
+       calculate_score();
        show_the_pipes();
        make_bird_tilt_appropriately();
        make_bird_slow_and_fall();
@@ -246,6 +246,7 @@ function reset_game() {
      case 'over': {
       make_bird_slow_and_fall();
       display_game_over();
+
       break;
     }
   }
@@ -256,5 +257,6 @@ bottom_bar.src = "img/bottom.png" ;
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
-// setInterval(display_score_by_time, 100);
+// setInterval(calculate_score, 100);
+// setInterval(display_score, 100);
 setInterval(Do_a_Frame, 1000/FPS);
