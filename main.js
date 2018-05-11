@@ -23,8 +23,8 @@ function myFunction(x) {
 //
 
 var myCanvas = document.getElementById('myCanvas');
-myCanvas.width = myCanvas.clientWidth;
-myCanvas.height = myCanvas.clientHeight;
+// myCanvas.width = myCanvas.clientWidth;
+// myCanvas.height = myCanvas.clientHeight;
 
 //check browser support
 if (myCanvas.getContext) {
@@ -130,7 +130,7 @@ function add_pipe(x_pos) {
   if(score>200){
     pipe_one_block.y = Math.floor(Math.random()*7)*100;
   }
-  pipe_one_block.y = Math.floor(Math.random()*6)*100;
+  pipe_one_block.y = Math.floor(Math.random()*12)*100;
   // Math.floor(Math.random()*(max-min+1)+min);
   pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+3));
 
@@ -256,7 +256,7 @@ function reset_game() {
 }
 var bottom_bar = new Image();
 bottom_bar.src = "img/bottom.png" ;
-
+console.log(pipes);
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
