@@ -37,7 +37,7 @@ if (myCanvas.getContext) {
 
  // var ctx = myCanvas.getContext("2d");
  var FPS = 40;
- var jump_amount = -10;
+ var jump_amount = -12;
  var max_fall_speed= +10;
  var acceleration = 1;
  var pipe_speed = -3;
@@ -113,10 +113,10 @@ function make_bird_slow_and_fall() {
  }
 }
 var pipe_piece_image_store = [
-'img/asteroid1.png',
+'img/asteroid1-100.png',
 // 'img/asteroid2.png',
 // 'img/asteroid3.png',
-'img/asteroid4.png',
+// 'img/asteroid4.png',
 // 'img/asteroid5.png',
 ];
 function generate_random_pipe_img(){
@@ -127,19 +127,19 @@ function generate_random_pipe_img(){
 function add_pipe(x_pos) {
   var pipe_one_block = new MySprite(generate_random_pipe_img());
   pipe_one_block.x = x_pos;
-  if(score>200){
-    pipe_one_block.y = Math.floor(Math.random()*7)*100;
-  }
-  pipe_one_block.y = Math.floor(Math.random()*12)*100;
-  // Math.floor(Math.random()*(max-min+1)+min);
-  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+3));
-
+  if(score>20){
+    pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+10));
+  }else{
+  // Math.floor(Math.random()*(max-min+1)+min);    
+  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+4));
+}
+  pipe_one_block.y = Math.floor(Math.random()*9)*100;
   pipes.push(pipe_one_block);
 }
 function add_all_my_pipes() {
-      for(var i = 5;i<200; i++){
-        add_pipe(i*100);
-      }
+  for(var i = 7;i<200; i++){
+    add_pipe(i*100);
+  }
       // var pipes_map_one= [
       // [500,  100, -4],
       // [500,  200, -4.5],
@@ -161,16 +161,16 @@ function add_all_my_pipes() {
   }
 
 
-add_all_my_pipes();
-function make_bird_tilt_appropriately() {
-  if (bird.velocity_y < 0)  {
-   bird.angle= -5;
+  add_all_my_pipes();
+  function make_bird_tilt_appropriately() {
+    if (bird.velocity_y < 0)  {
+     bird.angle= -5;
+   }
+   else if (bird.angle < 60) {
+     bird.angle = bird.angle + 4;
+   }
  }
- else if (bird.angle < 60) {
-   bird.angle = bird.angle + 4;
- }
-}
-function show_the_pipes() {
+ function show_the_pipes() {
   for (var i=0; i < pipes.length; i++) {
    pipes[i].Do_Frame_Things();
  }
@@ -220,35 +220,35 @@ function reset_game() {
       pipes=[];                           // erase all the pipes from the array
       add_all_my_pipes(); 
                    // and load them back in their starting positions
-    score = 0;
-    }
+                   score = 0;
+                 }
 
 
 
 
-  function Do_a_Frame () {
-    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-    bird.Do_Frame_Things();
-    display_bar_running_along_bottom();
-    switch (game_mode) {
-      case 'prestart': {
-        display_intro_instructions();
-        break;
-      }
-      case 'running': {
-       time_game_last_running = new Date();
-       bottom_bar_offset = bottom_bar_offset + pipe_speed;
-       display_score();
-       calculate_score();
-       show_the_pipes();
-       make_bird_tilt_appropriately();
-       make_bird_slow_and_fall();
-       check_for_end_game();
-       break;
-     }
-     case 'over': {
-      make_bird_slow_and_fall();
-      display_game_over();
+                 function Do_a_Frame () {
+                  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+                  bird.Do_Frame_Things();
+                  display_bar_running_along_bottom();
+                  switch (game_mode) {
+                    case 'prestart': {
+                      display_intro_instructions();
+                      break;
+                    }
+                    case 'running': {
+                     time_game_last_running = new Date();
+                     bottom_bar_offset = bottom_bar_offset + pipe_speed;
+                     display_score();
+                     calculate_score();
+                     show_the_pipes();
+                     make_bird_tilt_appropriately();
+                     make_bird_slow_and_fall();
+                     check_for_end_game();
+                     break;
+                   }
+                   case 'over': {
+                    make_bird_slow_and_fall();
+                    display_game_over();
       // score = 0;
       break;
     }
@@ -257,7 +257,7 @@ function reset_game() {
 var bottom_bar = new Image();
 bottom_bar.src = "img/bottom.png" ;
 console.log(pipes);
-var bird = new MySprite("img/astronaut.png");
+var bird = new MySprite("img/astronaut-80.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
 setInterval(Do_a_Frame, 1000/FPS);
