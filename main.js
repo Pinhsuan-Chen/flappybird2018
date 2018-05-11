@@ -88,6 +88,7 @@ function Got_Player_Input(MyEvent) {
 
   case 'running':
   bird.velocity_y = jump_amount;
+  console.log(score++);
   break;
 
   case 'over': if (new Date() - time_game_last_running > 1000) {
@@ -136,7 +137,6 @@ function add_pipe(x_pos) {
   pipes.push(pipe_one_block);
 }
 function add_all_my_pipes() {
-      console.log(pipes);
       for(var i = 5;i<200; i++){
         add_pipe(i*100);
       }
@@ -188,10 +188,10 @@ function display_score(){
 
 function calculate_score(){
 
-   for (var i=0; i < pipes.length; i++)
-    if (pipes[i].x < bird.x) {score = i;}
-  // score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
-  return score;
+  //  for (var i=0; i < pipes.length; i++)
+  //   if (pipes[i].x < bird.x) {score = i ; }
+  // // score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
+  // return score;
   
 }
 function display_intro_instructions () {
@@ -201,11 +201,12 @@ function display_intro_instructions () {
  ctx.fillText("Press, touch or click to start", myCanvas.width / 2, myCanvas.height / 4);
 }
 function display_game_over () {
+  var final_score = score;
   ctx.font= "30px Courier New";
   ctx.fillStyle= "white";
   ctx.textAlign="center";
   ctx.fillText("Game Over", myCanvas.width / 2, 100);
-  ctx.fillText("Score: " + score, myCanvas.width / 2, 150);
+  ctx.fillText("Score: " + final_score, myCanvas.width / 2, 150);
   ctx.font= "20px Courier New";
   ctx.fillText("Click, touch, or press to play again", myCanvas.width / 2, 300);
 }
@@ -246,7 +247,7 @@ function reset_game() {
      case 'over': {
       make_bird_slow_and_fall();
       display_game_over();
-
+      // score = 0;
       break;
     }
   }
