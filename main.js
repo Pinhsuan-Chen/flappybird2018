@@ -87,6 +87,7 @@ function Got_Player_Input(MyEvent) {
 
   case 'running':
   bird.velocity_y = jump_amount;
+  score++;
   break;
 
   case 'over': if (new Date() - time_game_last_running > 1000) {
@@ -98,6 +99,7 @@ function Got_Player_Input(MyEvent) {
 }
 MyEvent.preventDefault();
 }
+score = 0;
 addEventListener("touchstart", Got_Player_Input);
 addEventListener("mousedown", Got_Player_Input);
 addEventListener("keydown", Got_Player_Input);
@@ -114,7 +116,7 @@ var pipe_piece_image_store = [
 'img/asteroid1.png',
 // 'img/asteroid2.png',
 // 'img/asteroid3.png',
-// 'img/asteroid4.png',
+'img/asteroid4.png',
 // 'img/asteroid5.png',
 ];
 function generate_random_pipe_img(){
@@ -122,17 +124,21 @@ function generate_random_pipe_img(){
   return pipe_piece_image_store[randomNum];
 }
 
-function add_pipe(x_pos,pipe_speed_custom) {
+function add_pipe(x_pos) {
   var pipe_one_block = new MySprite(generate_random_pipe_img());
   pipe_one_block.x = x_pos;
-  pipe_one_block.y = Math.floor(Math.random()*5)*100;
-  pipe_one_block.velocity_x = pipe_speed_custom;
+  if(score>200){
+    pipe_one_block.y = Math.floor(Math.random()*7)*100;
+  }
+  pipe_one_block.y = Math.floor(Math.random()*6)*100;
+  // Math.floor(Math.random()*(max-min+1)+min);
+  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+3));
+
   pipes.push(pipe_one_block);
 }
 function add_all_my_pipes() {
-      console.log(pipes);
-      for(var i = 3;i<50; i++){
-        add_pipe(i*100,-4);
+      for(var i = 5;i<200; i++){
+        add_pipe(i*100);
       }
       // var pipes_map_one= [
       // [500,  100, -4],
@@ -160,7 +166,7 @@ function make_bird_tilt_appropriately() {
   if (bird.velocity_y < 0)  {
    bird.angle= -5;
  }
- else if (bird.angle < 70) {
+ else if (bird.angle < 60) {
    bird.angle = bird.angle + 4;
  }
 }
@@ -174,19 +180,18 @@ function check_for_end_game() {
    if (ImagesTouching(bird, pipes[i])) game_mode = "over";
 }
 function display_score(){
-  //  var score = 0;
-  //  for (var i=0; i < pipes.length; i++)
-  //   if (pipes[i].x < bird.x) {score = score + 0.5;}
   ctx.font= "20px Courier New";
   ctx.fillStyle= "white";
   ctx.textAlign="center";
   ctx.fillText("Score: " + score, 80, 30);
 }
-var start_time = Date.now();
 
-function calculate_score_by_time(){
-  score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
-  return score;
+function calculate_score(){
+
+  //  for (var i=0; i < pipes.length; i++)
+  //   if (pipes[i].x < bird.x) {score = i ; }
+  // // score = Math.floor((Date.now()-time_game_last_running_seconds)/100);
+  // return score;
   
 }
 function display_intro_instructions () {
@@ -196,11 +201,12 @@ function display_intro_instructions () {
  ctx.fillText("Press, touch or click to start", myCanvas.width / 2, myCanvas.height / 4);
 }
 function display_game_over () {
+  var final_score = score;
   ctx.font= "30px Courier New";
   ctx.fillStyle= "white";
   ctx.textAlign="center";
   ctx.fillText("Game Over", myCanvas.width / 2, 100);
-  ctx.fillText("Score: " + score, myCanvas.width / 2, 150);
+  ctx.fillText("Score: " + final_score, myCanvas.width / 2, 150);
   ctx.font= "20px Courier New";
   ctx.fillText("Click, touch, or press to play again", myCanvas.width / 2, 300);
 }
@@ -212,7 +218,9 @@ function reset_game() {
   bird.y = myCanvas.height / 2;
   bird.angle= 0;
       pipes=[];                           // erase all the pipes from the array
-      add_all_my_pipes();                 // and load them back in their starting positions
+      add_all_my_pipes(); 
+                   // and load them back in their starting positions
+    score = 0;
     }
 
 
@@ -231,7 +239,7 @@ function reset_game() {
        time_game_last_running = new Date();
        bottom_bar_offset = bottom_bar_offset + pipe_speed;
        display_score();
-       calculate_score_by_time();
+       calculate_score();
        show_the_pipes();
        make_bird_tilt_appropriately();
        make_bird_slow_and_fall();
@@ -241,6 +249,7 @@ function reset_game() {
      case 'over': {
       make_bird_slow_and_fall();
       display_game_over();
+      // score = 0;
       break;
     }
   }
@@ -251,5 +260,4 @@ bottom_bar.src = "img/bottom.png" ;
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
-// setInterval(display_score_by_time, 100);
 setInterval(Do_a_Frame, 1000/FPS);
