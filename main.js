@@ -83,12 +83,11 @@ function Got_Player_Input(MyEvent) {
   case 'prestart':
   game_mode = 'running';
   time_game_last_running_seconds = Date.now();
-
   break;
 
   case 'running':
   bird.velocity_y = jump_amount;
-  console.log(score++);
+  score++;
   break;
 
   case 'over': if (new Date() - time_game_last_running > 1000) {
@@ -100,6 +99,7 @@ function Got_Player_Input(MyEvent) {
 }
 MyEvent.preventDefault();
 }
+score = 0;
 addEventListener("touchstart", Got_Player_Input);
 addEventListener("mousedown", Got_Player_Input);
 addEventListener("keydown", Got_Player_Input);
@@ -218,7 +218,9 @@ function reset_game() {
   bird.y = myCanvas.height / 2;
   bird.angle= 0;
       pipes=[];                           // erase all the pipes from the array
-      add_all_my_pipes();                 // and load them back in their starting positions
+      add_all_my_pipes(); 
+                   // and load them back in their starting positions
+    score = 0;
     }
 
 
@@ -258,6 +260,4 @@ bottom_bar.src = "img/bottom.png" ;
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
-// setInterval(calculate_score, 100);
-// setInterval(display_score, 100);
 setInterval(Do_a_Frame, 1000/FPS);
