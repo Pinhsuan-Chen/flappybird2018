@@ -78,6 +78,7 @@ function ImagesTouching(thing1, thing2) {
  if (thing1.y >= thing2.y + thing2.MyImg.height || thing1.y + thing1.MyImg.height <= thing2.y) return false;
  return true;
 }
+
 function Got_Player_Input(MyEvent) {
  switch (game_mode) {
   case 'prestart':
@@ -114,6 +115,15 @@ function make_bird_slow_and_fall() {
 }
 var pipe_piece_image_store = [
 'img/asteroid1-100.png',
+// 'img/asteroid0.svg',
+'img/asteroid1.svg',
+// 'img/asteroid2.svg',
+// 'img/asteroid3.svg',
+// 'img/asteroid4.svg',
+// 'img/asteroid5.svg',
+'img/asteroid4.png',
+// 'img/asteroid7.svg',
+
 // 'img/asteroid2.png',
 // 'img/asteroid3.png',
 // 'img/asteroid4.png',
@@ -140,37 +150,20 @@ function add_all_my_pipes() {
   for(var i = 7;i<200; i++){
     add_pipe(i*100);
   }
-      // var pipes_map_one= [
-      // [500,  100, -4],
-      // [500,  200, -4.5],
-      // [600,  300, -4],
-      // [900,  200, -4],
-      // [1100, 400, -3],
-      // [1400,  100, -4],
-      // [1600,  300, -4],
-      // [1800,  500, -3],
-      // [1900,  200, -4],
-      // [2100, 400, -3],
-      // ];
-      // pipes_map_one.forEach(el => add_pipe(...el));
-      
-    // var finish_line = new MySprite("http://s2js.com/img/etc/flappyend.png");
-    // finish_line.x = 3900;
-    // finish_line.velocity_x = pipe_speed;
-    // pipes.push(finish_line);
-  }
+
+}
 
 
-  add_all_my_pipes();
-  function make_bird_tilt_appropriately() {
-    if (bird.velocity_y < 0)  {
-     bird.angle= -5;
-   }
-   else if (bird.angle < 60) {
-     bird.angle = bird.angle + 4;
-   }
+add_all_my_pipes();
+function make_bird_tilt_appropriately() {
+  if (bird.velocity_y < 0)  {
+   bird.angle= -5;
  }
- function show_the_pipes() {
+ else if (bird.angle < 60) {
+   bird.angle = bird.angle + 4;
+ }
+}
+function show_the_pipes() {
   for (var i=0; i < pipes.length; i++) {
    pipes[i].Do_Frame_Things();
  }
@@ -211,8 +204,10 @@ function display_game_over () {
   ctx.fillText("Click, touch, or press to play again", myCanvas.width / 2, 300);
 }
 function display_bar_running_along_bottom() {
+
  if (bottom_bar_offset < -23) bottom_bar_offset = 0;
  ctx.drawImage(bottom_bar, bottom_bar_offset, myCanvas.height - bottom_bar.height);
+
 }
 function reset_game() {
   bird.y = myCanvas.height / 2;
@@ -237,7 +232,7 @@ function reset_game() {
                     }
                     case 'running': {
                      time_game_last_running = new Date();
-                     bottom_bar_offset = bottom_bar_offset + pipe_speed;
+                     // bottom_bar_offset = bottom_bar_offset + pipe_speed;
                      display_score();
                      calculate_score();
                      show_the_pipes();
@@ -255,9 +250,9 @@ function reset_game() {
   }
 }
 var bottom_bar = new Image();
-bottom_bar.src = "img/bottom.png" ;
+bottom_bar.src = "img/bottom.svg" ;
 console.log(pipes);
-var bird = new MySprite("img/astronaut-80.png");
+var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
 setInterval(Do_a_Frame, 1000/FPS);
