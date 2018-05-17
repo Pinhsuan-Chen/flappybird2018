@@ -172,7 +172,10 @@ function show_the_pipes() {
 }
 function check_for_end_game() {
  for (var i=0; i < pipes.length; i++)
-   if (ImagesTouching(bird, pipes[i])) game_mode = "over";
+   if (ImagesTouching(bird, pipes[i])) {
+    game_mode = "over";
+    bird.angle = 60;
+  }
 }
 function display_score(){
   ctx.font= "20px Courier New";
