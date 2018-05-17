@@ -115,9 +115,17 @@ function make_bird_slow_and_fall() {
  }
 }
 var pipe_piece_image_store = [
-'img/asteroid1-100.png',
-'img/asteroid2-80.png',
-'img/asteroid4.png',
+// 'img/a1-1.png',
+// 'img/a1-2.png',
+'img/a2-1.png',
+'img/a2-2.png',
+'img/a3-1.png',
+'img/a3-2.png',
+'img/a4-1.png',
+'img/a4-2.png',
+'img/a5-1.png',
+'img/a5-2.png',
+
 ];
 function generate_random_pipe_img(){
   var randomNum = Math.floor(Math.random()* pipe_piece_image_store.length);
