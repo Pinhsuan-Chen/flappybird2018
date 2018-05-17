@@ -108,9 +108,10 @@ function make_bird_slow_and_fall() {
   if (bird.velocity_y < max_fall_speed) {
    bird.velocity_y = bird.velocity_y + acceleration;
  }
- if (bird.x < 0 || bird.y+bird.MyImg.height < 0 || bird.y > myCanvas.height - bird.MyImg.height)  {
+ if (bird.x < 0 || bird.y+bird.MyImg.height < 0 || bird.y > myCanvas.height - bird.MyImg.height + 5)  {
    bird.velocity_y = 0;
    game_mode = 'over';
+   bird.angle = 90;
  }
 }
 var pipe_piece_image_store = [
@@ -156,7 +157,8 @@ function add_all_my_pipes() {
 
 add_all_my_pipes();
 function make_bird_tilt_appropriately() {
-  if (bird.velocity_y < 0)  {
+
+ if (bird.velocity_y < 0)  {
    bird.angle= -5;
  }
  else if (bird.angle < 60) {
