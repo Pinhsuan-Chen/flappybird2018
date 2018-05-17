@@ -250,7 +250,7 @@ function reset_game() {
   }
 }
 var bottom_bar = new Image();
-bottom_bar.src = "img/bottom.svg" ;
+bottom_bar.src = "" ;
 console.log(pipes);
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
