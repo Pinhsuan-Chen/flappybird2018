@@ -252,7 +252,7 @@ function reset_game() {
                     case 'running': {
                      time_game_last_running = new Date();
                      time_game_running_millisecond = Date.now() - time_game_start;
-                     console.log(time_game_running_millisecond);
+                     // console.log(time_game_running_millisecond);
 
                      // bottom_bar_offset = bottom_bar_offset + pipe_speed;
                      display_score();
@@ -274,7 +274,7 @@ function reset_game() {
 }
 var bottom_bar = new Image();
 bottom_bar.src = "" ;
-console.log(pipes);
+// console.log(pipes);
 var bird = new MySprite("img/astronaut.png");
 bird.x = myCanvas.width / 3;
 bird.y = myCanvas.height / 2;
