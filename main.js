@@ -44,6 +44,8 @@ if (myCanvas.getContext) {
  var game_mode = 'prestart';
  var time_game_last_running;
  var time_game_last_running_seconds;
+ var time_game_start;
+ var time_game_running_millisecond;
  var bottom_bar_offset = 0;
  var pipes = [];
  var score = 0;
@@ -84,6 +86,7 @@ function Got_Player_Input(MyEvent) {
   case 'prestart':
   game_mode = 'running';
   time_game_last_running_seconds = Date.now();
+  time_game_start = Date.now();
   break;
 
   case 'running':
@@ -132,25 +135,41 @@ function generate_random_pipe_img(){
   return pipe_piece_image_store[randomNum];
 }
 
-function add_pipe(x_pos) {
+function add_pipe(pipe_param) {
   var pipe_one_block = new MySprite(generate_random_pipe_img());
-  pipe_one_block.x = x_pos;
-
-  // Math.floor(Math.random()*(max-min+1)+min);    
-  pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+4));
-
+  pipe_one_block.x = pipe_param*50;
+  // Math.floor(Math.random()*(max-min+1)+min);
+ 
+    pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+4));
+  
+  
   pipe_one_block.y = Math.floor(Math.random()*9)*100;
   pipes.push(pipe_one_block);
 }
+
+
 function add_all_my_pipes() {
   for(var i = 7;i<200; i++){
-    add_pipe(i*100);
+    if(i>150){
+      add_pipe(i);
+
+    }
+    else if(i>80){
+     add_pipe(i*1.6); 
+    }
+      else{
+    add_pipe(i*2);
+
+      }
+
   }
 
 }
-
-
 add_all_my_pipes();
+
+
+
+
 function make_bird_tilt_appropriately() {
 
  if (bird.velocity_y < 0)  {
@@ -232,6 +251,9 @@ function reset_game() {
                     }
                     case 'running': {
                      time_game_last_running = new Date();
+                     time_game_running_millisecond = Date.now() - time_game_start;
+                     console.log(time_game_running_millisecond);
+
                      // bottom_bar_offset = bottom_bar_offset + pipe_speed;
                      display_score();
                      calculate_score();
@@ -239,6 +261,7 @@ function reset_game() {
                      make_bird_tilt_appropriately();
                      make_bird_slow_and_fall();
                      check_for_end_game();
+
                      break;
                    }
                    case 'over': {
