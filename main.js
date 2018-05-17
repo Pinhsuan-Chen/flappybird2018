@@ -116,19 +116,8 @@ function make_bird_slow_and_fall() {
 }
 var pipe_piece_image_store = [
 'img/asteroid1-100.png',
-// 'img/asteroid0.svg',
-'img/asteroid1.svg',
-// 'img/asteroid2.svg',
-// 'img/asteroid3.svg',
-// 'img/asteroid4.svg',
-// 'img/asteroid5.svg',
+'img/asteroid2-80.png',
 'img/asteroid4.png',
-// 'img/asteroid7.svg',
-
-// 'img/asteroid2.png',
-// 'img/asteroid3.png',
-// 'img/asteroid4.png',
-// 'img/asteroid5.png',
 ];
 function generate_random_pipe_img(){
   var randomNum = Math.floor(Math.random()* pipe_piece_image_store.length);
@@ -138,12 +127,10 @@ function generate_random_pipe_img(){
 function add_pipe(x_pos) {
   var pipe_one_block = new MySprite(generate_random_pipe_img());
   pipe_one_block.x = x_pos;
-  if(score>20){
-    pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+10));
-  }else{
+
   // Math.floor(Math.random()*(max-min+1)+min);    
   pipe_one_block.velocity_x =0-(Math.floor(Math.random()*5+4));
-}
+
   pipe_one_block.y = Math.floor(Math.random()*9)*100;
   pipes.push(pipe_one_block);
 }
